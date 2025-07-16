@@ -1,0 +1,175 @@
+Great — here’s a code-less, detailed technical guide that you can give to an AI developer (or development agent) to execute. It includes what to build, in what order, how components interact, and key rules to follow — but without writing code inside the doc itself.
+
+⸻
+
+📘 No-Code Execution Guide for AI Developer
+
+Project: Anti-Detect Browser MVP
+
+Goal: Build a desktop anti-detect browser app using Electron (for desktop shell), React (for UI), and Puppeteer (for stealth browser control).
+
+⸻
+
+🔧 Phase 1: Project Structure Setup
+
+🧱 Objective:
+
+Create a multi-part application with clear separation between:
+	•	Main Process (Electron logic)
+	•	Renderer Process (React UI)
+	•	Automation Layer (Puppeteer for browser control)
+
+🔲 Required Folders:
+	•	A folder for the Electron main process logic
+	•	A folder for the React front-end app
+	•	A folder to store browser profile configs
+	•	A shared preload script for frontend↔backend communication
+
+⸻
+
+🎨 Phase 2: Build the React UI (Frontend)
+
+🧱 Objective:
+
+Build a clean and modern UI to manage browser profiles, proxies, and fingerprint settings.
+
+📋 Tasks for UI:
+	1.	Create a Sidebar with these sections:
+	•	Home
+	•	Profiles
+	•	Proxies
+	•	Team (optional)
+	•	Settings
+	2.	In the Profiles section, allow the user to:
+	•	Create, edit, delete profiles
+	•	Input: profile name, proxy, tags, resolution, fingerprint settings
+	•	Save each profile config as a .json file into the designated profile folder
+	3.	Add a Launch button for each profile that sends the profile ID to Electron backend
+
+⸻
+
+⚙️ Phase 3: Electron Desktop App
+
+🧱 Objective:
+
+Create the Electron app shell that loads the React UI and manages system-level logic.
+
+📋 What the Electron App Should Do:
+	1.	Open a desktop window and load the frontend.
+	2.	Provide a bridge between frontend and backend using a “preload script.”
+	3.	Receive profile launch requests from the UI (profile ID).
+	4.	Pass those requests to the Puppeteer browser launcher logic.
+
+⸻
+
+🌐 Phase 4: Puppeteer-Based Browser Launcher
+
+🧱 Objective:
+
+Launch a Chromium browser with spoofed fingerprints and proxy for each profile.
+
+📋 What Puppeteer Should Do:
+	1.	Load the profile’s .json config file.
+	2.	Read user agent, screen resolution, proxy, and cookies.
+	3.	Launch Chromium with:
+	•	The correct user-agent
+	•	The correct proxy settings
+	•	The desired window size/resolution
+	•	Any cookies, tokens, or tabs to preload
+	4.	Keep profiles isolated from each other.
+	5.	Open up to 5 predefined tabs if specified.
+	6.	Optionally use stealth plugin to avoid bot detection.
+
+⸻
+
+🔐 Phase 5: Profile Storage System
+
+🧱 Objective:
+
+Store and manage user-created profiles securely and modularly.
+
+📋 What a Profile Contains:
+	•	Unique profile ID (filename)
+	•	User agent
+	•	Proxy address
+	•	Screen resolution
+	•	Cookie data (optional)
+	•	Tags, group (for organization)
+	•	List of tabs to preload on launch
+	•	Fingerprint settings (e.g., canvas, WebGL flags)
+
+🧾 Where to Store:
+	•	Save each profile as a .json file in a profile_data folder.
+	•	Use unique filenames based on profile name or ID.
+
+⸻
+
+🔌 Phase 6: Communication Between UI and Backend
+
+🧱 Objective:
+
+Create a bridge between frontend (React) and backend (Electron + Puppeteer).
+
+📋 AI Implementation Rules:
+	•	Use a preload script to securely expose specific backend functions (like “launchProfile”) to the frontend.
+	•	Frontend should call those exposed functions (e.g., launchProfile("facebook1")).
+	•	Electron receives the call, finds the profile, and starts the browser via Puppeteer.
+
+⸻
+
+📦 Phase 7: Execution & Running the App
+
+🧱 Objective:
+
+Make the entire app work as one system.
+
+📋 Steps:
+	1.	Start the React UI using a frontend development server.
+	2.	Launch Electron, which will load the frontend and handle logic behind the scenes.
+	3.	From the UI, launch any browser profile.
+	4.	Puppeteer opens a browser window with the correct spoofed settings and proxy.
+
+⸻
+
+📈 Phase 8: Optional Expansions
+
+Here are future modules that can be added modularly by the AI agent:
+
+Feature	Description
+Bulk Profile Creator	Create many profiles from CSV or templates.
+Team Management	Add ability to share profiles with teammates.
+Resource Monitoring	Show RAM/CPU usage for each running profile.
+Scheduler	Launch profiles at specific times.
+Vault Backup	Encrypted export/import of all profiles and proxies.
+Cloud Sync	Optional cloud storage + encrypted profile sync.
+Proxy Marketplace	Connect to API of proxy providers.
+Browser Automation	Add Puppeteer scripting interface for automated actions.
+
+
+⸻
+
+🔒 Security Guidelines
+
+AI developer must ensure the following:
+	•	Do not store passwords or cookies in plain text.
+	•	Encrypt sensitive data using AES or similar encryption.
+	•	Profiles should be sandboxed — one profile should never leak data to another.
+	•	Make sure Electron is secure (no nodeIntegration in frontend).
+	•	If using cloud sync in the future, ensure encrypted transfer and at-rest storage.
+
+⸻
+
+🧠 Summary for AI Developer
+
+Area	Instruction
+Project Setup	Use Electron for app shell, React for UI, Puppeteer for browser logic
+UI	Build sidebar-based profile manager, launch buttons, editable settings
+Profile Storage	Save each profile as a JSON file, with spoofing and proxy info
+Launch System	Electron listens to frontend, then launches spoofed browsers via Puppeteer
+Communication	Use secure preload script to allow frontend to trigger backend logic
+Future-Proofing	System should support bulk actions, templates, sync, automation modules
+
+
+⸻
+
+If you’d like this formatted for a GitHub README, Notion, or Markdown/PDF export, I can do that as well. Just let me know your preferred format.
