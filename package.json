@@ -1,0 +1,61 @@
+{
+  "name": "antidetect-browser",
+  "version": "1.0.0",
+  "description": "Anti-Detect Browser MVP with Electron, React, and Puppeteer",
+  "main": "src/main/main.js",
+  "scripts": {
+    "start": "electron .",
+    "dev": "concurrently \"npm run dev:renderer\" \"wait-on http://localhost:3000 && NODE_ENV=development electron .\"",
+    "dev:renderer": "cd src/renderer && npm run dev",
+    "build": "cd src/renderer && npm run build",
+    "build:electron": "electron-builder",
+    "postinstall": "cd src/renderer && yarn"
+  },
+  "keywords": [
+    "electron",
+    "react",
+    "puppeteer",
+    "anti-detect",
+    "browser"
+  ],
+  "author": "Anti-Detect Browser",
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^8.2.2",
+    "electron": "^27.0.0",
+    "electron-builder": "^24.6.4",
+    "wait-on": "^7.0.1"
+  },
+  "dependencies": {
+    "crypto-js": "^4.2.0",
+    "http-proxy-agent": "^7.0.2",
+    "https-proxy-agent": "^7.0.6",
+    "puppeteer": "^19.11.1",
+    "puppeteer-extra": "^3.3.6",
+    "puppeteer-extra-plugin-stealth": "^2.11.2",
+    "socks-proxy-agent": "^8.0.5",
+    "uuid": "^9.0.1"
+  },
+  "build": {
+    "appId": "com.antidetect.browser",
+    "productName": "Anti-Detect Browser",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "src/main/**/*",
+      "src/renderer/build/**/*",
+      "node_modules/**/*"
+    ],
+    "mac": {
+      "category": "public.app-category.developer-tools"
+    },
+    "win": {
+      "target": "nsis"
+    },
+    "linux": {
+      "target": "AppImage"
+    }
+  },
+  "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
+}
