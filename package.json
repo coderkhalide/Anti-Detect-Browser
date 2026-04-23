@@ -34,7 +34,7 @@
     "puppeteer-extra": "^3.3.6",
     "puppeteer-extra-plugin-stealth": "^2.11.2",
     "socks-proxy-agent": "^8.0.5",
-    "uuid": "^9.0.1"
+    "uuid": "^14.0.0"
   },
   "build": {
     "appId": "com.antidetect.browser",
